@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Quiz>
+  <Question number="1" type="checkbox">
+    <Text>What are desired attributes of good quality software?</Text>
+    <a correct="true">Maintainability</a>
+    <b correct="true">Dependability</b>
+    <c correct="true">Efficiency</c>
+    <d>None of the above</d>
+  </Question>
+  <Question number="2" type="radiobox">
+    <Text>Software Engineering Distinct Phases: Testing comes after Requirements Gathering</Text>
+    <a>True</a>
+    <b correct="true">False</b>
+  </Question>
+  <Question number="3" type="radiobox">
+    <Text>What is a Critical Path?</Text>
+    <a>Sequence of activities you can delay and still finish the project in the shortest time possible</a>
+    <b correct="true">A sequence of activities that take the longest time to complete</b>
+    <c>The earliest date you can start an activity</c>
+  </Question>
+  <Question number="4" type="radiobox">
+    <Text>What does the C in the MOSCOW method stand for?</Text>
+    <a>Cant</a>
+    <b>Count</b>
+    <c correct="true">Could</c>
+  </Question>
+  <Question number="5" type="radiobox">
+    <Text>Usage of architecture pattern: Monolithic is best suited for very small applications where a single programmer is working on the code</Text>
+    <a correct="true">True</a>
+    <b>False</b>
+  </Question>
+  <Question number="6" type="radiobox">
+    <Text>Which of these is not a top level container?</Text>
+    <a>Jwindow</a>
+    <b correct="true">Jpanel</b>
+    <c>Jdialog</c>
+    <d>Jframe</d>
+  </Question>
+  <Question number="7" type="radiobox">
+    <Text>Use case diagrams describe the dynamic behavior between actors of the system and objects of the system</Text>
+    <a>True</a>
+    <b correct="true">False</b>
+  </Question>
+  <Question number="8" type="radiobox">
+    <Text>In XML, which escape character represents "&gt;"?</Text>
+    <a>&amp;quot;</a>
+    <b>&amp;apos;</b>
+    <c>&amp;lt;</c>
+    <d correct="true">&amp;gt;</d>
+    <e>&amp;amp;</e>
+  </Question>
+  <Question number="9" type="radiobox">
+    <Text>What Software Failure Category matches this description? "A music player app crashes only when playing specific songs"</Text>
+    <a>Recoverable</a>
+    <b>Unrecoverable</b>
+    <c>Non-corrupting</c>
+    <d correct="true">Transient</d>
+  </Question>
+  <Question number="10" type="radiobox">
+    <Text>Which Software Development Model is used most for risk handling?</Text>
+    <a>Waterfall Model</a>
+    <b correct="true">Spiral Model</b>
+    <c>Sashimi Model</c>
+    <d>Evolutionary Model</d>
+  </Question>
+</Quiz>
