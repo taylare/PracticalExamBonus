@@ -35,29 +35,39 @@ import org.xml.sax.SAXException;
         
         //reading data from the text file:
         try {
-            File xmlFile = new File(System.getProperty("user.dir") + "\\src\\practicalexambonus\\questions.xml");
+            File xmlFile = new File(System.getProperty("user.dir") + "\\src\\quiz\\quiz.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
-                
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("Question"); //root element
-            
-            for (int i = 0; i < nList.getLength(); i++) {
-                Element eElement = (Element) nList.item(i);
-                String type = eElement.getAttribute("type");
-                String title = eElement.getElementsByTagName("text").item(0).getTextContent();
-                String a = eElement.getElementsByTagName("a").item(0).getTextContent();
-                String b = eElement.getElementsByTagName("a").item(0).getTextContent();
-                String c = eElement.getElementsByTagName("c").item(0).getTextContent();
-                String d = eElement.getElementsByTagName("d").item(0).getTextContent();
-                
-                Question questionOptions = new Question (title, type, a, b, c, d);
-                questions.add(questionOptions);
-            } 
+            // Check if the document is null
+            if (doc != null) {
+
+                doc.getDocumentElement().normalize();
+                NodeList nList = doc.getElementsByTagName("Question"); //root element
+
+                for (int i = 0; i < nList.getLength(); i++) {
+                    Element eElement = (Element) nList.item(i);
+                    String type = eElement.getAttribute("type");
+                    String title = eElement.getElementsByTagName("Text").item(0).getTextContent();
+                    String a = eElement.getElementsByTagName("a").item(0).getTextContent();
+                    String b = eElement.getElementsByTagName("b").item(0).getTextContent();
+                    String c = eElement.getElementsByTagName("c").item(0).getTextContent();
+                    String d = eElement.getElementsByTagName("d").item(0).getTextContent();
+
+                    Question questionOptions = new Question (title, type, a, b, c, d);
+                    questions.add(questionOptions);
+                } 
+
+            } else {
+            System.out.println("Error: Document is null!");
+        }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
-       }
+        } catch (SAXException ex) {
+            System.out.println("SAXException: " + ex.getMessage());
+        } catch (ParserConfigurationException ex) {
+            System.out.println("ParserConfigurationException: " + ex.getMessage());
+        }
    }
   
     public int getQuizCount() { 

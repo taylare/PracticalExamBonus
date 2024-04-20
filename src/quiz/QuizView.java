@@ -6,6 +6,7 @@ package quiz;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,13 +14,61 @@ import javax.swing.JOptionPane;
  * @author tayre
  */
 public class QuizView extends javax.swing.JFrame {
+    private QuizModel theModel;
+    private QuizController theController;
+
 
     /**
      * Creates new form QuizView1
      */
-    public QuizView() {
+    public QuizView(QuizModel theModel) {
+
         initComponents();
+        this.theModel = theModel;
+        
+         hideAllOptions();
+
+
     }
+    
+    public void displayQuestion(){
+        
+    }
+    
+        public void showRadioButtons() {
+        jRadioButtonA.setVisible(true);
+        jRadioButtonB.setVisible(true);
+        jRadioButtonC.setVisible(true);
+        jRadioButtonD.setVisible(true);
+        jCheckBoxA.setVisible(false);
+        jCheckBoxB.setVisible(false);
+        jCheckBoxC.setVisible(false);
+        jCheckBoxD.setVisible(false);
+    }
+
+    public void showCheckBoxes() {
+        jRadioButtonA.setVisible(false);
+        jRadioButtonB.setVisible(false);
+        jRadioButtonC.setVisible(false);
+        jRadioButtonD.setVisible(false);
+        jCheckBoxA.setVisible(true);
+        jCheckBoxB.setVisible(true);
+        jCheckBoxC.setVisible(true);
+        jCheckBoxD.setVisible(true);
+    }
+
+    public void hideAllOptions() {
+        jRadioButtonA.setVisible(false);
+        jRadioButtonB.setVisible(false);
+        jRadioButtonC.setVisible(false);
+        jRadioButtonD.setVisible(false);
+        jCheckBoxA.setVisible(false);
+        jCheckBoxB.setVisible(false);
+        jCheckBoxC.setVisible(false);
+        jCheckBoxD.setVisible(false);
+    }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -235,6 +284,10 @@ void addPrevListener(ActionListener listenForPrevButton){
         jButtonSubmit.addActionListener(listenForSubmitButton);
     }
     
+    void addXmlListener(ActionListener listenForXMLButton){
+        jMenuItemXML.addActionListener(listenForXMLButton);
+    }
+    
    /* void addViewBidsListener(ActionListener listenForViewBidsButton){
         jMenuItemViewBids.addActionListener(listenForViewBidsButton);
     }*/
@@ -260,13 +313,12 @@ void addPrevListener(ActionListener listenForPrevButton){
     }
     
     void setC(String c) {
-        jRadioButtonA.setText(c);
+        jRadioButtonC.setText(c);
     }
     
     void setD(String d) {
-        jRadioButtonA.setText(d);
+        jRadioButtonD.setText(d);
     }
-    
     
     void setQuestionCount(String questionCount) {
         jLabelQuestionCount.setText(questionCount);

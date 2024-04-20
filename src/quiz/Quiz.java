@@ -4,6 +4,9 @@
  */
 package quiz;
 
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+
 /**
  *
  * @author tayre
@@ -13,9 +16,9 @@ public class Quiz {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParserConfigurationException, SAXException {
         QuizModel theModel = new QuizModel();
-        QuizView theView = new QuizView(null, true, theModel);
+        QuizView theView = new QuizView(theModel);
         QuizController theController;
         theController = new QuizController(theView, theModel);
         theView.setVisible(true);  

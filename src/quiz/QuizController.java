@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 class QuizController {
     protected QuizView theView; //reference to GUI
     protected QuizModel theModel; //reference to data model
-
+    private int currentQuestionNum;
     
     QuizController(QuizView theView, QuizModel theModel) {
         this.theView = theView;
@@ -24,7 +24,7 @@ class QuizController {
         
         this.theView.addPrevListener(new PrevButtonListener());
         this.theView.addNextListener(new NextButtonListener());
-        this.theView.addXMLQuestionListener(new ViewXMLQuestionListener());
+        this.theView.addXmlListener(new ViewXMLQuestionListener());
         this.theView.addSubmitListener(new SubmitButtonListener());
         
         //theModel.refreshResults();
@@ -35,7 +35,7 @@ class QuizController {
     try {
         Question q = theModel.getTheQuestion(); 
         if (q != null) {
-            theView.setQuestion(q.getTitle());
+            theView.setQuestion(q.getText());
             theView.setA(q.getA());
             theView.setB(q.getB());
             theView.setC(q.getC());
@@ -48,8 +48,18 @@ class QuizController {
             theView.setD("???");
             theView.setQuestion("???");
         }
+        
+        // Check question type and adjust UI components visibility
+            if ("radiobox".equals(q.getType())) {
+                theView.showRadioButtons();
+            } else if ("checkbox".equals(q.getType())) {
+                theView.showCheckBoxes();
+            } else {
+            // If no question or invalid data, hide all options
+            theView.hideAllOptions();
+        }
 
-        // Update contract count display
+    
         int currentQuestiontNum = theModel.getCurrentQuestionNum();
         int totalQuestions = theModel.getQuizCount();
         theView.updateQuizViewPanel(currentQuestionNum, totalQuestions);
@@ -68,29 +78,38 @@ class QuizController {
         }
         }catch (Error ex) {
             System.out.println(ex);
-            theView.displayErrorMessage("Error: There was a problem setting the contract. \n" + "Contract number: " + theModel.getTheContract().getContractID());
+            theView.displayErrorMessage("Error: There was a problem setting the question." );
         }
     }
     
     class PrevButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (theModel.getCurrentQuestionNum() > 0) {
-                theModel.prevQuestion();
-                theView.displayQuestion(theModel.getTheQuestion());
-                setUpDisplay();
+         
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             
+            if (theModel.getCurrentQuestionNum() == 0) {
+                 return;
             }
-        }
-    }
+            try {
+                theModel.prevQuestion();
+                
+            } catch (Exception ex) {
+                System.out.println(ex);
+                theView.displayErrorMessage("Error: There is a problem setting a previous contract.");            
+            }
+            setUpDisplay(); //updates GUI with details of current contract
+         }
+     }
 
     
-    class NextButtonListener implements ActionListener {
+    class SubmitButtonListener implements ActionListener {
          
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                theModel.nextQuestion();
-                theView.displayQuestion(theModel.getTheQuestion());
+               /* theModel.nextQuestion();
+                theView.displayQuestion(theModel.getTheQuestion());*/
+               System.out.print("Submitted!");
             } catch (Exception ex) {
                 System.out.println(ex);
                 theView.displayErrorMessage("Error: There is a problem setting the next question.");            
@@ -105,10 +124,9 @@ class QuizController {
         public void actionPerformed(ActionEvent e) {
             try {
                 theModel.nextQuestion();
-                theView.displayQuestion(theModel.getTheQuestion());
             } catch (Exception ex) {
                 System.out.println(ex);
-                theView.displayErrorMessage("Error: There is a problem setting the next question.");            
+                theView.displayErrorMessage("Error: There is a problem setting the next contract.");            
             }
             setUpDisplay();
         }
@@ -119,18 +137,18 @@ class QuizController {
     public void actionPerformed(ActionEvent e) {
         try {
            setUpDisplay();
-            } 
+        
         } catch (Exception ex) {
             ex.printStackTrace();
             theView.displayErrorMessage("Error: There was an issue processing your submission.");
         }
     }
 
-    private void showCompletionPopup() {
+    /*private void showCompletionPopup() {
         String name = JOptionPane.showInputDialog(theView, "You got: " + theModel.getScore() + "! Enter your name to save score:");
         if (name != null && !name.isEmpty()) {
             saveScore(name, theModel.getScore());
         }
-    }
+    }*/
     }
 }
