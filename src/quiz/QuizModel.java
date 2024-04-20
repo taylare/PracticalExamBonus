@@ -45,16 +45,15 @@ import org.xml.sax.SAXException;
             
             for (int i = 0; i < nList.getLength(); i++) {
                 Element eElement = (Element) nList.item(i);
-                String question = eElement.getElementsByTagName("text").item(0).getTextContent();
+                String type = eElement.getAttribute("type");
+                String title = eElement.getElementsByTagName("text").item(0).getTextContent();
                 String a = eElement.getElementsByTagName("a").item(0).getTextContent();
                 String b = eElement.getElementsByTagName("a").item(0).getTextContent();
                 String c = eElement.getElementsByTagName("c").item(0).getTextContent();
                 String d = eElement.getElementsByTagName("d").item(0).getTextContent();
                 
-                Question questionOptions = new Question (a, b, c, d);
+                Question questionOptions = new Question (title, type, a, b, c, d);
                 questions.add(questionOptions);
-                Question questionText = new Question (question);
-                questionTitle.add(questionText);
             } 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -73,6 +72,12 @@ import org.xml.sax.SAXException;
         return currentQuestionIndex;
     } 
     
+     public void nextQuestion() {
+        if (currentQuestionIndex < questions.size() - 1) {
+            currentQuestionIndex++;
+        }
+    }
+    
     public Question getTheQuestion() {
     if (currentQuestionIndex >= 0 && currentQuestionIndex < questions.size()) {
         return questions.get(currentQuestionIndex);
@@ -80,13 +85,6 @@ import org.xml.sax.SAXException;
         throw new IllegalStateException("No questions are available to display.");
     }
 }
-
-    
-    public void nextQuestion() {
-        if (currentQuestionIndex < questions.size() - 1) {
-            currentQuestionIndex++;
-        }
-    }
     
     public void prevQuestion() {
         if (currentQuestionIndex > 0) {

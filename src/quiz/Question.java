@@ -20,24 +20,22 @@ class Question {
     private String c;
     private String d;
     
-    public Question(String type, String a, String b, String c, String d){
+    public Question( String text, String type, String a, String b, String c, String d){
         this.type = type;
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
-    }
-    
-    public Question (String text){
         this.text = text;
     }
+  
     
 
     public String getA(){
         return a;
     }
     public String getType(){
-        return a;
+        return type;
     }
     
     public String getText(){

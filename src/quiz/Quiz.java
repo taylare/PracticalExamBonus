@@ -14,7 +14,11 @@ public class Quiz {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        QuizModel theModel = new QuizModel();
+        QuizView theView = new QuizView(null, true, theModel);
+        QuizController theController;
+        theController = new QuizController(theView, theModel);
+        theView.setVisible(true);  
     }
     
 }

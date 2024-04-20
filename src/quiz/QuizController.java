@@ -18,7 +18,7 @@ class QuizController {
     protected QuizModel theModel; //reference to data model
 
     
-    QuizController(QuizView1 theView, QuizModel1 theModel) {
+    QuizController(QuizView theView, QuizModel theModel) {
         this.theView = theView;
         this.theModel = theModel;
         
@@ -28,6 +28,48 @@ class QuizController {
         this.theView.addSubmitListener(new SubmitButtonListener());
         
         //theModel.refreshResults();
+    }
+    
+    //get the checkboxes/radio boxes to hide 
+    private void setUpDisplay() {
+    try {
+        Question q = theModel.getTheQuestion(); 
+        if (q != null) {
+            theView.setQuestion(q.getTitle());
+            theView.setA(q.getA());
+            theView.setB(q.getB());
+            theView.setC(q.getC());
+            theView.setD(q.getD());
+            
+        } else { //placeholders
+            theView.setA("???");
+            theView.setB("???");
+            theView.setC("???");
+            theView.setD("???");
+            theView.setQuestion("???");
+        }
+
+        // Update contract count display
+        int currentQuestiontNum = theModel.getCurrentQuestionNum();
+        int totalQuestions = theModel.getQuizCount();
+        theView.updateQuizViewPanel(currentQuestionNum, totalQuestions);
+
+        // Enable or disable prev and next buttons based on contract position
+        if (currentQuestionNum == 0) {
+            theView.disablePrevButton();
+        } else {
+            theView.enablePrevButton();
+        }
+
+        if (currentQuestionNum == totalQuestions - 1) {
+            theView.disableNextButton();
+        } else {
+            theView.enableNextButton();
+        }
+        }catch (Error ex) {
+            System.out.println(ex);
+            theView.displayErrorMessage("Error: There was a problem setting the contract. \n" + "Contract number: " + theModel.getTheContract().getContractID());
+        }
     }
     
     class PrevButtonListener implements ActionListener {
@@ -76,23 +118,7 @@ class QuizController {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            List<String> selectedAnswers = theView.getSelectedAnswers();
-            Question currentQuestion = theModel.getTheQuestion();
-            if (selectedAnswers.isEmpty()) {
-                theView.setFeedback("Please select an answer.");
-                return;
-            }
-
-            if (selectedAnswers.contains(currentQuestion.getCorrectAnswers()) && selectedAnswers.size() == 1) {
-                theView.setFeedback("Correct!");
-                theModel.incrementScore();  // Increment score for correct answer
-            } else {
-                theView.setFeedback("Incorrect! The correct answer is: " + currentQuestion.getCorrectAnswer());
-            }
-
-            // Check if it was the last question
-            if (theModel.getCurrentQuestionNum() == theModel.getQuizCount() - 1) {
-                showCompletionPopup();  
+           setUpDisplay();
             } 
         } catch (Exception ex) {
             ex.printStackTrace();
