@@ -4,6 +4,7 @@
  */
 package quiz;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,18 +16,21 @@ import java.util.List;
 class Question {
     private String text;
     private String type;
-    private String a;
-    private String b;
-    private String c;
-    private String d;
+    private String a, b, c, d;
+    private boolean aCorrect, bCorrect, cCorrect, dCorrect;
+  
     
-    public Question( String text, String type, String a, String b, String c, String d){
+    public Question( String text, String type, String a, String b, String c, String d, boolean aCorrect, boolean bCorrect, boolean cCorrect, boolean dCorrect){
         this.type = type;
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
         this.text = text;
+        this.aCorrect = aCorrect;
+        this.bCorrect = bCorrect;
+        this.cCorrect = cCorrect;
+        this.dCorrect = dCorrect;
     }
   
     
@@ -76,6 +80,34 @@ class Question {
 
      public void setType(){
        this.type = type;
+    }
+
+    public boolean isACorrect() { 
+        return aCorrect; 
+    }
+    
+    public boolean isBCorrect() { 
+        return bCorrect; 
+    }
+    public boolean isCCorrect() { 
+        return cCorrect; 
+    }
+    public boolean isDCorrect() { 
+        return dCorrect; 
+    }
+    
+     public List<String> getCorrectAnswers() {
+        List<String> correctAnswers = new ArrayList<>();
+        if (aCorrect) correctAnswers.add("a");
+        if (bCorrect) correctAnswers.add("b");
+        if (cCorrect) correctAnswers.add("c");
+        if (dCorrect) correctAnswers.add("d");
+        return correctAnswers;
+    }
+
+    public String getCorrectAnswersAsString() {
+        List<String> correctAnswers = getCorrectAnswers();
+        return String.join(", ", correctAnswers);
     }
     
     

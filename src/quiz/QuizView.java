@@ -100,6 +100,7 @@ public class QuizView extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 153, 255));
 
         jLabelQuestionText.setText("jLabel1");
 
@@ -176,23 +177,24 @@ public class QuizView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelQuestionText, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButtonB)
-                            .addComponent(jRadioButtonC)
-                            .addComponent(jRadioButtonD)
-                            .addComponent(jRadioButtonA)
-                            .addComponent(jCheckBoxA, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBoxB, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBoxC, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBoxD, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelFeedback)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(340, 340, 340)
-                        .addComponent(jButtonPrev)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonSubmit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonNext)))
+                            .addComponent(jCheckBoxC, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabelQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(325, 325, 325)
+                                    .addComponent(jButtonPrev)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonSubmit)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonNext))
+                                .addComponent(jLabelFeedback)
+                                .addComponent(jRadioButtonA, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCheckBoxA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jRadioButtonB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jCheckBoxD, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jRadioButtonD, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jRadioButtonC, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCheckBoxB, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(200, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -202,28 +204,28 @@ public class QuizView extends javax.swing.JFrame {
                 .addComponent(jLabelQuestionCount)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelQuestionText)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButtonA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButtonA)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCheckBoxA)
                 .addGap(5, 5, 5)
                 .addComponent(jRadioButtonB)
-                .addGap(7, 7, 7)
+                .addGap(9, 9, 9)
                 .addComponent(jCheckBoxB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRadioButtonC)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxC)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addComponent(jRadioButtonD)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxD)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPrev)
                     .addComponent(jButtonSubmit)
                     .addComponent(jButtonNext))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jLabelFeedback)
                 .addGap(28, 28, 28))
         );
@@ -306,19 +308,24 @@ void addPrevListener(ActionListener listenForPrevButton){
     
     void setA(String a) {
         jRadioButtonA.setText(a);
+        jCheckBoxA.setText(a);
     }
     
     void setB(String b) {
         jRadioButtonB.setText(b);
+        jCheckBoxB.setText(b);
     }
     
     void setC(String c) {
         jRadioButtonC.setText(c);
+        jCheckBoxC.setText(c);
     }
     
     void setD(String d) {
         jRadioButtonD.setText(d);
+        jCheckBoxD.setText(d);
     }
+    
     
     void setQuestionCount(String questionCount) {
         jLabelQuestionCount.setText(questionCount);
@@ -344,6 +351,19 @@ void addPrevListener(ActionListener listenForPrevButton){
     void disableNextButton() {
       jButtonNext.setEnabled(false);
     }
+    
+    public void displayMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+    
+    public String getCurrentAnswer() {
+    if (jRadioButtonA.isSelected()) return "a";
+    if (jRadioButtonB.isSelected()) return "b";
+    if (jRadioButtonC.isSelected()) return "c";
+    if (jRadioButtonD.isSelected()) return "d";
+    return ""; 
+}
+
     
    /* public void addQuitListener(MouseListener listener) {
         jMenuQuit.addMouseListener(listener);

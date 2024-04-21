@@ -34,6 +34,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="ff" green="99" red="ff" type="rgb"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -55,7 +58,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="191" max="-2" attributes="0"/>
@@ -64,25 +67,27 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelQuestionText" min="-2" pref="504" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonB" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonC" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonD" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jRadioButtonA" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBoxA" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                          <Component id="jCheckBoxB" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                          <Component id="jCheckBoxC" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                          <Component id="jCheckBoxD" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                          <Component id="jLabelFeedback" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxC" min="-2" pref="591" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabelQuestionText" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="325" max="-2" attributes="0"/>
+                                  <Component id="jButtonPrev" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButtonSubmit" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButtonNext" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabelFeedback" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonA" alignment="0" min="-2" pref="450" max="-2" attributes="0"/>
+                              <Component id="jCheckBoxA" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jRadioButtonB" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jCheckBoxD" alignment="0" min="-2" pref="524" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonD" alignment="0" min="-2" pref="514" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jRadioButtonC" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
+                          <Component id="jCheckBoxB" alignment="0" min="-2" pref="591" max="-2" attributes="0"/>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="340" max="-2" attributes="0"/>
-                      <Component id="jButtonPrev" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonSubmit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonNext" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="200" max="32767" attributes="0"/>
@@ -96,21 +101,21 @@
               <Component id="jLabelQuestionCount" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabelQuestionText" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jRadioButtonA" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jRadioButtonA" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jCheckBoxA" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Component id="jRadioButtonB" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Component id="jCheckBoxB" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jRadioButtonC" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jCheckBoxC" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Component id="jRadioButtonD" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jCheckBoxD" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -118,7 +123,7 @@
                   <Component id="jButtonSubmit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonNext" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
               <Component id="jLabelFeedback" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
           </Group>

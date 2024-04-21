@@ -5,7 +5,9 @@
 package quiz;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,16 +24,13 @@ import org.xml.sax.SAXException;
  public class QuizModel {
    private ArrayList<Question> questions;
    private int currentQuestionIndex;
-   private int correctAnswer;
-   private ArrayList<Question> questionTitle;
+   private int score;
 
    public QuizModel() throws ParserConfigurationException, SAXException {
        questions = new ArrayList<>();
        currentQuestionIndex = 0;
-       correctAnswer = 0;
-       questionTitle = new ArrayList<>();
-       
-        //loadBids();
+       score = 0;
+
         
         //reading data from the text file:
         try {
@@ -46,16 +45,28 @@ import org.xml.sax.SAXException;
                 NodeList nList = doc.getElementsByTagName("Question"); //root element
 
                 for (int i = 0; i < nList.getLength(); i++) {
-                    Element eElement = (Element) nList.item(i);
-                    String type = eElement.getAttribute("type");
-                    String title = eElement.getElementsByTagName("Text").item(0).getTextContent();
-                    String a = eElement.getElementsByTagName("a").item(0).getTextContent();
-                    String b = eElement.getElementsByTagName("b").item(0).getTextContent();
-                    String c = eElement.getElementsByTagName("c").item(0).getTextContent();
-                    String d = eElement.getElementsByTagName("d").item(0).getTextContent();
+                     Element eElement = (Element) nList.item(i);
+                String type = eElement.getAttribute("type");
+                String text = eElement.getElementsByTagName("Text").item(0).getTextContent();
 
-                    Question questionOptions = new Question (title, type, a, b, c, d);
-                    questions.add(questionOptions);
+                Element aElement = (Element) eElement.getElementsByTagName("a").item(0);
+                String a = aElement.getTextContent();
+                boolean aCorrect = "true".equals(aElement.getAttribute("correct"));
+
+                Element bElement = (Element) eElement.getElementsByTagName("b").item(0);
+                String b = bElement.getTextContent();
+                boolean bCorrect = "true".equals(bElement.getAttribute("correct"));
+
+                Element cElement = (Element) eElement.getElementsByTagName("c").item(0);
+                String c = cElement.getTextContent();
+                boolean cCorrect = "true".equals(cElement.getAttribute("correct"));
+
+                Element dElement = (Element) eElement.getElementsByTagName("d").item(0);
+                String d = dElement.getTextContent();
+                boolean dCorrect = "true".equals(dElement.getAttribute("correct"));
+
+                Question question = new Question(text, type, a, b, c, d, aCorrect, bCorrect, cCorrect, dCorrect);
+                questions.add(question);
                 } 
 
             } else {
@@ -101,5 +112,34 @@ import org.xml.sax.SAXException;
             currentQuestionIndex--;
         }
     }
+    
+    public boolean checkAnswer(String userAnswer) {
+    Question currentQuestion = getTheQuestion();
+    switch (userAnswer.toLowerCase()) {
+        case "a": return currentQuestion.isACorrect();
+        case "b": return currentQuestion.isBCorrect();
+        case "c": return currentQuestion.isCCorrect();
+        case "d": return currentQuestion.isDCorrect();
+        default: return false;
+    }
+}
+
+public boolean isLastQuestion() {
+    return currentQuestionIndex == questions.size() - 1;
+}
+
+public int getScore() {
+    return score;
+}
+
+public void saveScore(String name) {
+    String filename = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
+    try (PrintWriter out = new PrintWriter(new FileWriter(filename, true))) { // true to append to the file rather than overwrite
+        out.println(name + ": " + getScore());
+    } catch (IOException ex) {
+        System.err.println("Error writing to score file: " + ex.getMessage());
+    }
+}
+
 }
    

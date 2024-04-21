@@ -30,7 +30,6 @@ class QuizController {
         //theModel.refreshResults();
     }
     
-    //get the checkboxes/radio boxes to hide 
     private void setUpDisplay() {
     try {
         Question q = theModel.getTheQuestion(); 
@@ -48,19 +47,18 @@ class QuizController {
             theView.setD("???");
             theView.setQuestion("???");
         }
-        
-        // Check question type and adjust UI components visibility
+
             if ("radiobox".equals(q.getType())) {
                 theView.showRadioButtons();
             } else if ("checkbox".equals(q.getType())) {
                 theView.showCheckBoxes();
             } else {
-            // If no question or invalid data, hide all options
+            // if no question or invalid data, hide all options
             theView.hideAllOptions();
         }
 
     
-        int currentQuestiontNum = theModel.getCurrentQuestionNum();
+        int currentQuestionNum = theModel.getCurrentQuestionNum();
         int totalQuestions = theModel.getQuizCount();
         theView.updateQuizViewPanel(currentQuestionNum, totalQuestions);
 
@@ -82,55 +80,64 @@ class QuizController {
         }
     }
     
-    class PrevButtonListener implements ActionListener {
-         
-         @Override
-         public void actionPerformed(ActionEvent e) {
-             
-            if (theModel.getCurrentQuestionNum() == 0) {
-                 return;
-            }
-            try {
+        class PrevButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (theModel.getCurrentQuestionNum() > 0) {
                 theModel.prevQuestion();
-                
-            } catch (Exception ex) {
-                System.out.println(ex);
-                theView.displayErrorMessage("Error: There is a problem setting a previous contract.");            
+                setUpDisplay(); 
             }
-            setUpDisplay(); //updates GUI with details of current contract
-         }
-     }
+        }
+    }
+
+    class NextButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (theModel.getCurrentQuestionNum() < theModel.getQuizCount() - 1) {
+                theModel.nextQuestion();
+                setUpDisplay(); 
+            }
+        }
+    }
+
 
     
-    class SubmitButtonListener implements ActionListener {
+   class SubmitButtonListener implements ActionListener {
          
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-               /* theModel.nextQuestion();
-                theView.displayQuestion(theModel.getTheQuestion());*/
-               System.out.print("Submitted!");
+                String userAnswer = theView.getCurrentAnswer();
+                if (userAnswer.isEmpty()) {
+                    theView.setFeedback("Please select an answer.");
+                    return; // stop further processing if no answer is selected
+                }
+
+                boolean isCorrect = theModel.checkAnswer(userAnswer);
+                if (isCorrect) {
+                    theView.setFeedback("Correct!");
+                } else {
+                    String correctAnswers = theModel.getTheQuestion().getCorrectAnswersAsString();
+                    theView.setFeedback("Incorrect! Correct answer(s): " + correctAnswers);
+                }
+
+                if (theModel.isLastQuestion()) {
+                    int totalScore = theModel.getScore();
+                    theView.displayMessage("Finished test! You scored " + totalScore + "!");
+                    String name = JOptionPane.showInputDialog(theView, "Enter your name to save the score:");
+                    if (name != null && !name.isEmpty()) {
+                        theModel.saveScore(name);
+                    }
+                  
+                } 
             } catch (Exception ex) {
                 System.out.println(ex);
-                theView.displayErrorMessage("Error: There is a problem setting the next question.");            
+                theView.displayErrorMessage("Error: There is a problem processing your submission.");
             }
-            setUpDisplay();
         }
     }
-    
-    class NextButtonListener implements ActionListener {
-         
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                theModel.nextQuestion();
-            } catch (Exception ex) {
-                System.out.println(ex);
-                theView.displayErrorMessage("Error: There is a problem setting the next contract.");            
-            }
-            setUpDisplay();
-        }
-    }
+
+   
     
     class ViewXMLQuestionListener implements ActionListener {
     @Override
