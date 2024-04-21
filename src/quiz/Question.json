@@ -1,0 +1,114 @@
+{
+  "Quiz": [
+    {
+      "number": "1",
+      "type": "checkbox",
+      "q": "What are desired attributes of good quality software?",
+      "Options": {
+        "a": {"q": "a) boop", "correct": true},
+        "b": {"q": "b) Dependability", "correct": true},
+        "c": {"q": "c) Efficiency", "correct": true},
+        "d": {"q": "d) None of the above"}
+      }
+    },
+    {
+      "number": "2",
+      "type": "radiobox",
+      "q": "Software Engineering Distinct Phases: Testing comes after Requirements Gathering",
+      "Options": {
+        "a": {"q": "a) True"},
+        "b": {"q": "b) False", "correct": true},
+        "c": {"q": "c) blank"},
+        "d": {"q": "d) blank"}
+      }
+    },
+    {
+      "number": "3",
+      "type": "radiobox",
+      "q": "What is a Critical Path?",
+      "Options": {
+        "a": {"q": "a) Sequence of activities you can delay and still finish the project in the shortest time possible"},
+        "b": {"q": "b) A sequence of activities that take the longest time to complete", "correct": true},
+        "c": {"q": "c) The earliest date you can start an activity"},
+        "d": {"q": "d) blank"}
+      }
+    },
+    {
+      "number": "4",
+      "type": "radiobox",
+      "q": "What does the C in the MOSCOW method stand for?",
+      "Options": {
+        "a": {"q": "a) Cant"},
+        "b": {"q": "b) Count"},
+        "c": {"q": "c) Could", "correct": true},
+        "d": {"q": "d) blank"}
+      }
+    },
+    {
+      "number": "5",
+      "type": "radiobox",
+      "q": "Usage of architecture pattern: Monolithic is best suited for very small applications where a single programmer is working on the code",
+      "Options": {
+        "a": {"q": "a) True", "correct": true},
+        "b": {"q": "b) False"},
+        "c": {"q": "c) blank"},
+        "d": {"q": "d) blank"}
+      }
+    },
+    {
+      "number": "6",
+      "type": "radiobox",
+      "q": "Which of these is not a top level container?",
+      "Options": {
+        "a": {"q": "a) Jwindow"},
+        "b": {"q": "b) Jpanel", "correct": true},
+        "c": {"q": "c) Jdialog"},
+        "d": {"q": "d) Jframe"}
+      }
+    },
+    {
+      "number": "7",
+      "type": "radiobox",
+      "q": "Use case diagrams describe the dynamic behavior between actors of the system and objects of the system",
+      "Options": {
+        "a": {"q": "a) True"},
+        "b": {"q": "b) False", "correct": true},
+        "c": {"q": "c) blank"},
+        "d": {"q": "d) blank"}
+      }
+    },
+    {
+      "number": "8",
+      "type": "radiobox",
+      "q": "In XML, which escape character represents \">\"?",
+      "Options": {
+        "a": {"q": "a) &quot;"},
+        "b": {"q": "b) &apos;"},
+        "c": {"q": "c) &lt;"},
+        "d": {"q": "d) &gt;", "correct": true}
+      }
+    },
+    {
+      "number": "9",
+      "type": "radiobox",
+      "q": "What Software Failure Category matches this description? \"A music player app crashes only when playing specific songs\"",
+      "Options": {
+        "a": {"q": "a) beep"},
+        "b": {"q": "b) Unrecoverable"},
+        "c": {"q": "c) Non-corrupting"},
+        "d": {"q": "d) Transient", "correct": true}
+      }
+    },
+    {
+      "number": "10",
+      "type": "radiobox",
+      "q": "Which Software Development Model is used most for risk handling?",
+      "Options": {
+        "a": {"q": "a) Waterfall Model"},
+        "b": {"q": "b) Spiral Model", "correct": true},
+        "c": {"q": "c) Sashimi Model"},
+        "d": {"q": "d) Evolutionary Model"}
+      }
+    }
+  ]
+}

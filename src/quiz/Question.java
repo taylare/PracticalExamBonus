@@ -21,6 +21,7 @@ class Question {
   
     
     public Question( String text, String type, String a, String b, String c, String d, boolean aCorrect, boolean bCorrect, boolean cCorrect, boolean dCorrect){
+      
         this.type = type;
         this.a = a;
         this.b = b;

@@ -27,17 +27,10 @@ public class QuizView extends javax.swing.JFrame {
         initComponents();
         customInitcomponents();
         this.theModel = theModel;
-        
-         hideAllOptions();
-
-
+        hideAllOptions();
     }
     
-    public void displayQuestion(){
-        
-    }
-    
-        public void showRadioButtons() {
+    public void showRadioButtons() {
         jLabelStart.setVisible(false);
         jRadioButtonA.setVisible(true);
         jRadioButtonB.setVisible(true);
@@ -81,8 +74,6 @@ public class QuizView extends javax.swing.JFrame {
         jButtonSubmit.setVisible(true);
     }
 
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -111,7 +102,7 @@ public class QuizView extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuITem = new javax.swing.JMenu();
         jMenuItemXML = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemJSON = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,7 +171,7 @@ public class QuizView extends javax.swing.JFrame {
 
         jMenuITem.setText("File");
 
-        jMenuItemXML.setText("jMenuItem1");
+        jMenuItemXML.setText("XML");
         jMenuItemXML.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemXMLActionPerformed(evt);
@@ -188,8 +179,13 @@ public class QuizView extends javax.swing.JFrame {
         });
         jMenuITem.add(jMenuItemXML);
 
-        jMenuItem2.setText("jMenuItem2");
-        jMenuITem.add(jMenuItem2);
+        jMenuItemJSON.setText("JSON");
+        jMenuItemJSON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemJSONActionPerformed(evt);
+            }
+        });
+        jMenuITem.add(jMenuItemJSON);
 
         jMenuBar1.add(jMenuITem);
 
@@ -287,6 +283,10 @@ public class QuizView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemXMLActionPerformed
 
+    private void jMenuItemJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemJSONActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemJSONActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -307,7 +307,7 @@ public class QuizView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuITem;
-    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemJSON;
     private javax.swing.JMenuItem jMenuItemXML;
     private javax.swing.JRadioButton jRadioButtonA;
     private javax.swing.JRadioButton jRadioButtonB;
@@ -337,9 +337,9 @@ public class QuizView extends javax.swing.JFrame {
         jMenuItemXML.addActionListener(listenForXMLButton);
     }
     
-   /* void addViewBidsListener(ActionListener listenForViewBidsButton){
-        jMenuItemViewBids.addActionListener(listenForViewBidsButton);
-    }*/
+    void addJsonListener(ActionListener listenForJSONButton){
+        jMenuItemJSON.addActionListener(listenForJSONButton);
+    }
    
     void displayErrorMessage(String errorMessage){
         JOptionPane.showMessageDialog(this, errorMessage);
@@ -405,33 +405,29 @@ public class QuizView extends javax.swing.JFrame {
 
     
     public String getCurrentAnswer() {
-    StringBuilder answer = new StringBuilder();
-    if (jRadioButtonA.isVisible()) {
-        if (jRadioButtonA.isSelected()) return "a";
-        if (jRadioButtonB.isSelected()) return "b";
-        if (jRadioButtonC.isSelected()) return "c";
-        if (jRadioButtonD.isSelected()) return "d";
-    } else if (jCheckBoxA.isVisible()) {
-        if (jCheckBoxA.isSelected()) answer.append("a");
-        if (jCheckBoxB.isSelected()) answer.append("b");
-        if (jCheckBoxC.isSelected()) answer.append("c");
-        if (jCheckBoxD.isSelected()) answer.append("d");
-        return answer.toString();
+        StringBuilder answer = new StringBuilder();
+        if (jRadioButtonA.isVisible()) {
+            if (jRadioButtonA.isSelected()) return "a";
+            if (jRadioButtonB.isSelected()) return "b";
+            if (jRadioButtonC.isSelected()) return "c";
+            if (jRadioButtonD.isSelected()) return "d";
+        } else if (jCheckBoxA.isVisible()) {
+            if (jCheckBoxA.isSelected()) answer.append("a");
+            if (jCheckBoxB.isSelected()) answer.append("b");
+            if (jCheckBoxC.isSelected()) answer.append("c");
+            if (jCheckBoxD.isSelected()) answer.append("d");
+            return answer.toString();
+        }
+        return answer.toString(); // Returns empty string if no options are selected
     }
-    return answer.toString(); // Returns empty string if no options are selected
-}
     
- 
+    public void setBackgroundColor(Color color) {
+        getContentPane().setBackground(color);
+    }
 
-public void setBackgroundColor(Color color) {
-    getContentPane().setBackground(color);
-}
-
-public void resetRadioButtons() {
-    buttonGroup1.clearSelection();
-}
-
-
+    public void resetRadioButtons() {
+        buttonGroup1.clearSelection();
+    }
     
    /* public void addQuitListener(MouseListener listener) {
         jMenuQuit.addMouseListener(listener);

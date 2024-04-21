@@ -34,69 +34,110 @@ class QuizController {
         this.theView.addNextListener(new NextButtonListener());
         this.theView.addXmlListener(new ViewXMLQuestionListener());
         this.theView.addSubmitListener(new SubmitButtonListener());
-        
+        this.theView.addJsonListener(new ViewJSONQuestionListener());
         //theModel.refreshResults();
     }
     
     private void setUpDisplay() {
-    try {
-        theView.resetRadioButtons(); 
-        theView.setBackgroundColor(new Color(205, 180, 219));  //lavender background
-        Question q = theModel.getTheQuestion(); 
-        theView.showButtons();
-        if (q != null) {
-            theView.setQuestion(q.getText());
-            theView.setA(q.getA());
-            theView.setB(q.getB());
-            theView.setC(q.getC());
-            theView.setD(q.getD());
-            
-        } else { //placeholders
-            theView.setA("???");
-            theView.setB("???");
-            theView.setC("???");
-            theView.setD("???");
-            theView.setQuestion("???");
-        }
+        try {
+            theView.resetRadioButtons(); 
+            theView.setBackgroundColor(new Color(205, 180, 219));  //lavender background
+            Question q = theModel.getTheQuestion(); 
+            theView.showButtons();
+            if (q != null) {
+                theView.setQuestion(q.getText());
+                theView.setA(q.getA());
+                theView.setB(q.getB());
+                theView.setC(q.getC());
+                theView.setD(q.getD());
 
+            } else { //placeholders
+                theView.setA("???");
+                theView.setB("???");
+                theView.setC("???");
+                theView.setD("???");
+                theView.setQuestion("???");
+            }
             if ("radiobox".equals(q.getType())) {
                 theView.showRadioButtons();
             } else if ("checkbox".equals(q.getType())) {
                 theView.showCheckBoxes();
+            } 
+
+            int currentQuestionNum = theModel.getCurrentQuestionNum();
+            int totalQuestions = theModel.getQuizCount();
+            theView.updateQuizViewPanel(currentQuestionNum, totalQuestions);
+            // Enable or disable prev and next buttons based on contract position
+            if (currentQuestionNum == 0) {
+                theView.disablePrevButton();
             } else {
-            // if no question or invalid data, hide all options
-            theView.hideAllOptions();
-        }
-
-    
-        int currentQuestionNum = theModel.getCurrentQuestionNum();
-        int totalQuestions = theModel.getQuizCount();
-        theView.updateQuizViewPanel(currentQuestionNum, totalQuestions);
-
-        // Enable or disable prev and next buttons based on contract position
-        if (currentQuestionNum == 0) {
-            theView.disablePrevButton();
-        } else {
-            theView.enablePrevButton();
-        }
-
-        if (currentQuestionNum == totalQuestions - 1) {
-            theView.disableNextButton();
-        } else {
-            theView.enableNextButton();
-        }
+                theView.enablePrevButton();
+            }
+            if (currentQuestionNum == totalQuestions - 1) {
+                theView.disableNextButton();
+            } else {
+                theView.enableNextButton();
+            }
         }catch (Error ex) {
             System.out.println(ex);
             theView.displayErrorMessage("Error: There was a problem setting the question." );
         }
     }
     
-        class PrevButtonListener implements ActionListener {
+    private void setUpDisplayJSON() {
+        try {
+            theView.resetRadioButtons(); // Resets selections
+            theView.setBackgroundColor(new Color(153, 217, 140));  
+            // fetch and display the JSON question
+            Question jsonQ = theModel.getTheQuestion();  
+            if (jsonQ != null) {
+                theView.setQuestion(jsonQ.getText());
+                theView.setA(jsonQ.getA());
+                theView.setB(jsonQ.getB());
+                theView.setC(jsonQ.getC());
+                theView.setD(jsonQ.getD());
+                // setting the visibility based on question type
+                if ("radiobox".equals(jsonQ.getType())) {
+                    theView.showRadioButtons();
+                } else if ("checkbox".equals(jsonQ.getType())) {
+                    theView.showCheckBoxes();
+                }
+            } 
+            int currentQuestionNum = theModel.getCurrentQuestionNum();
+            int totalQuestions = theModel.getQuizCount();
+            theView.updateQuizViewPanel(currentQuestionNum, totalQuestions);
+
+            // Enable or disable prev and next buttons based on contract position
+            if (currentQuestionNum == 0) {
+                theView.disablePrevButton();
+            } else {
+                theView.enablePrevButton();
+            }
+
+            if (currentQuestionNum == totalQuestions - 1) {
+                theView.disableNextButton();
+            } else {
+                theView.enableNextButton();
+            }
+
+        } catch (Exception ex) {
+            System.err.println("Error in setUpDisplayJSON: " + ex.getMessage());
+            theView.displayErrorMessage("Error: There was a problem setting the JSON question.");
+        }
+    }
+
+    
+    class PrevButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (theModel.getCurrentQuestionNum() > 0) {
                 theModel.prevQuestion();
-                setUpDisplay(); 
+                // Decide which display setup to use based on the current source type
+                if (theModel.getCurrentSourceType() == QuizModel.SourceType.XML) {
+                    setUpDisplay();
+            } else if (theModel.getCurrentSourceType() == QuizModel.SourceType.JSON) {
+                setUpDisplayJSON();
+            }
                 theView.setFeedback("");
             }
         }
@@ -106,8 +147,13 @@ class QuizController {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (theModel.getCurrentQuestionNum() < theModel.getQuizCount() - 1) {
-                theModel.nextQuestion();
-                setUpDisplay(); 
+            theModel.nextQuestion();
+            // decide which display setup to use based on the current source type
+            if (theModel.getCurrentSourceType() == QuizModel.SourceType.XML) {
+                setUpDisplay();
+            } else if (theModel.getCurrentSourceType() == QuizModel.SourceType.JSON) {
+                setUpDisplayJSON();
+            }
                 theView.setFeedback("");
             }
         }
@@ -148,39 +194,51 @@ class QuizController {
         }
     }
 
-            public int getScore() {
-             return score;
-         }
+    public int getScore() {
+        return score;
+    }
 
-        public void saveScore(String name) {
-            String filename = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String formattedDateTime = now.format(formatter); 
-            try (PrintWriter out = new PrintWriter(new FileWriter(filename, true))) { // true to append to the file rather than overwrite
-                out.println(name + ": " + getScore() + " - completed on " + formattedDateTime);
-            } catch (IOException ex) {
-                System.err.println("Error writing to score file: " + ex.getMessage());
-            }
+    public void saveScore(String name) {
+        String filename = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = now.format(formatter); 
+        try (PrintWriter out = new PrintWriter(new FileWriter(filename, true))) { // true to append to the file rather than overwrite
+            out.println(name + ": " + getScore() + " - completed on " + formattedDateTime);
+        } catch (IOException ex) {
+            System.err.println("Error writing to score file: " + ex.getMessage());
         }
+    }
     
     class ViewXMLQuestionListener implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        try {
-           setUpDisplay();
-        
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            theView.displayErrorMessage("Error: There was an issue processing your submission.");
-        }
-    }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+               theModel.clearQuestions();
+               theModel.loadXMLQuiz();
+               setUpDisplay();
 
-    /*private void showCompletionPopup() {
-        String name = JOptionPane.showInputDialog(theView, "You got: " + theModel.getScore() + "! Enter your name to save score:");
-        if (name != null && !name.isEmpty()) {
-            saveScore(name, theModel.getScore());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                theView.displayErrorMessage("Error: There was an issue processing your submission.");
+            }
         }
-    }*/
     }
+    
+    class ViewJSONQuestionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                 theModel.clearQuestions();
+                theModel.loadJsonQuiz();
+                setUpDisplayJSON();
+                theView.showButtons();     
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                theView.displayErrorMessage("Error: There was an issue processing your submission.");
+            }
+        }
+    }            
 }
+  

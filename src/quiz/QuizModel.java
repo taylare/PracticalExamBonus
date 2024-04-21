@@ -5,15 +5,20 @@
 package quiz;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -24,28 +29,33 @@ import org.xml.sax.SAXException;
  * @author tayre
  */
  public class QuizModel {
-   private ArrayList<Question> questions;
-   private int currentQuestionIndex;
-
-   public QuizModel() throws ParserConfigurationException, SAXException {
+     
+    public enum SourceType { //will be used to differenciate between for the next, prev, submit buttons
+        XML, JSON
+    }
+    private SourceType currentSourceType;
+    private ArrayList<Question> questions;
+    private int currentQuestionIndex;
+  
+    public QuizModel() throws ParserConfigurationException, SAXException {
        questions = new ArrayList<>();
        currentQuestionIndex = 0;
- 
-        
-        //reading data from the text file:
-        try {
-            File xmlFile = new File(System.getProperty("user.dir") + "\\src\\quiz\\quiz.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(xmlFile);
-            // Check if the document is null
-            if (doc != null) {
+    }
+   
+    public void loadXMLQuiz() throws ParserConfigurationException, SAXException, IOException{
+        File xmlFile = new File(System.getProperty("user.dir") + "\\src\\quiz\\quiz.xml");
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(xmlFile);
+        setCurrentSourceType(SourceType.XML);
+        // Check if the document is null
+        if (doc != null) {
 
-                doc.getDocumentElement().normalize();
-                NodeList nList = doc.getElementsByTagName("Question"); //root element
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("Question"); //root element
 
-                for (int i = 0; i < nList.getLength(); i++) {
-                     Element eElement = (Element) nList.item(i);
+            for (int i = 0; i < nList.getLength(); i++) {
+                 Element eElement = (Element) nList.item(i);
                 String type = eElement.getAttribute("type");
                 String text = eElement.getElementsByTagName("Text").item(0).getTextContent();
 
@@ -67,20 +77,68 @@ import org.xml.sax.SAXException;
 
                 Question question = new Question(text, type, a, b, c, d, aCorrect, bCorrect, cCorrect, dCorrect);
                 questions.add(question);
-                } 
-
-            } else {
+            } 
+        } else {
             System.out.println("Error: Document is null!");
         }
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (SAXException ex) {
-            System.out.println("SAXException: " + ex.getMessage());
-        } catch (ParserConfigurationException ex) {
-            System.out.println("ParserConfigurationException: " + ex.getMessage());
+    }
+   
+   public void loadJsonQuiz() throws IOException, ParseException, org.json.simple.parser.ParseException {
+        JSONParser parser = new JSONParser();
+        File jsonFile = new File("C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\Question.json");
+        FileReader reader = new FileReader(jsonFile);
+        JSONObject jsonObject = (JSONObject) parser.parse(reader);
+        setCurrentSourceType(SourceType.JSON);
+        
+        JSONArray quizArray = (JSONArray) jsonObject.get("Quiz"); // Extract the quiz array
+        if (quizArray == null){
+            System.out.println("No quiz found");
         }
-   }
-  
+
+        for (Object o : quizArray) {
+            JSONObject qObj = (JSONObject) o;
+
+            String text = (String) qObj.get("q");
+            String type = (String) qObj.get("type");
+            JSONObject options = (JSONObject) qObj.get("Options");
+
+            // Extract options and their correctness
+            JSONObject optionA = (JSONObject) options.get("a");
+            String aText = (String) optionA.get("q"); 
+            boolean aCorrect = optionA.containsKey("correct") && (boolean) optionA.get("correct");
+
+            JSONObject optionB = (JSONObject) options.get("b");
+            String bText = (String) optionB.get("q"); 
+            boolean bCorrect = optionB.containsKey("correct") && (boolean) optionB.get("correct");
+
+            JSONObject optionC = (JSONObject) options.get("c");
+            String cText = (String) optionC.get("q"); 
+            boolean cCorrect = optionC.containsKey("correct") && (boolean) optionC.get("correct");
+
+            JSONObject optionD = (JSONObject) options.get("d");
+            String dText = (String) optionD.get("q"); 
+            boolean dCorrect = optionD.containsKey("correct") && (boolean) optionD.get("correct");
+
+            Question jsonQuestion = new Question(
+                text, type, aText, bText, cText, dText, aCorrect, bCorrect, cCorrect, dCorrect
+            );
+            questions.add(jsonQuestion);
+        }
+        if (questions.isEmpty()) {
+            System.out.println("No questions loaded into jsonQuestions list");
+        } else {
+            System.out.println("Loaded " + questions.size() + " JSON questions");
+        }
+    }
+   
+    public void setCurrentSourceType(SourceType type) {
+        this.currentSourceType = type;
+    }
+
+    public SourceType getCurrentSourceType() {
+        return this.currentSourceType;
+    }
+
     public int getQuizCount() { 
         return questions.size();
     }
@@ -93,25 +151,26 @@ import org.xml.sax.SAXException;
         return currentQuestionIndex;
     } 
     
-     public void nextQuestion() {
+    public Question getTheQuestion() {
+        if (currentQuestionIndex >= 0 && currentQuestionIndex < questions.size()) {
+            return questions.get(currentQuestionIndex);
+        } else {
+            throw new IllegalStateException("No questions are available to display.");
+        }
+    }
+
+    public void nextQuestion() {
         if (currentQuestionIndex < questions.size() - 1) {
             currentQuestionIndex++;
         }
     }
-    
-    public Question getTheQuestion() {
-    if (currentQuestionIndex >= 0 && currentQuestionIndex < questions.size()) {
-        return questions.get(currentQuestionIndex);
-    } else {
-        throw new IllegalStateException("No questions are available to display.");
-    }
-}
-    
+
     public void prevQuestion() {
         if (currentQuestionIndex > 0) {
             currentQuestionIndex--;
         }
     }
+
     
     public boolean checkAnswer(String userAnswers) {
         Question currentQuestion = getTheQuestion();
@@ -121,10 +180,14 @@ import org.xml.sax.SAXException;
     }
 
 
-public boolean isLastQuestion() {
-    return currentQuestionIndex == questions.size() - 1;
-}
+    public boolean isLastQuestion() {
+        return currentQuestionIndex == questions.size() - 1;
+    }
 
-
-}
    
+    public void clearQuestions() {
+        questions.clear();
+        currentQuestionIndex = 0;
+    }
+
+ }
