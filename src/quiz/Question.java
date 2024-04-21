@@ -18,6 +18,17 @@ class Question {
     private String type;
     private String a, b, c, d;
     private boolean aCorrect, bCorrect, cCorrect, dCorrect;
+    private boolean answered;
+    public static final int NUMBER_OF_SCORES_ATTRIBUTES = 4;
+    public static final int INDEX_OF_NAME = 0;
+    public static final int INDEX_OF_SCORE = 1;
+    public static final int INDEX_OF_DATE = 2;
+    public static final int INDEX_OF_TIMER = 3;
+    private String name;
+    private String score;
+    private String date;
+    private String timer;
+       
   
     
     public Question( String text, String type, String a, String b, String c, String d, boolean aCorrect, boolean bCorrect, boolean cCorrect, boolean dCorrect){
@@ -33,9 +44,14 @@ class Question {
         this.cCorrect = cCorrect;
         this.dCorrect = dCorrect;
     }
-  
     
-
+    public Question(String name, String score, String date, String timer) {
+        this.name = name;
+        this.score = score;
+        this.date = date;
+        this.timer = timer;
+    }
+  
     public String getA(){
         return a;
     }
@@ -109,6 +125,14 @@ class Question {
     public String getCorrectAnswersAsString() {
         List<String> correctAnswers = getCorrectAnswers();
         return String.join(", ", correctAnswers);
+    }
+
+    public boolean isAnswered(){
+        return answered;
+    }
+    
+    public void setAnswered(boolean answered){
+        this.answered = answered;
     }
     
     

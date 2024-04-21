@@ -40,6 +40,7 @@ public class QuizView extends javax.swing.JFrame {
         jCheckBoxB.setVisible(false);
         jCheckBoxC.setVisible(false);
         jCheckBoxD.setVisible(false);
+        
     }
 
     public void showCheckBoxes() {
@@ -66,13 +67,48 @@ public class QuizView extends javax.swing.JFrame {
         jButtonNext.setVisible(false);
         jButtonPrev.setVisible(false);
         jButtonSubmit.setVisible(false);
+        jLabelTimer.setVisible(false);
     }
     
     public void showButtons(){
         jButtonNext.setVisible(true);
         jButtonPrev.setVisible(true);
         jButtonSubmit.setVisible(true);
+        jLabelTimer.setVisible(true);
     }
+    
+    public void disableAnswerControls() {
+        jRadioButtonA.setEnabled(false);
+        jRadioButtonB.setEnabled(false);
+        jRadioButtonC.setEnabled(false);
+        jRadioButtonD.setEnabled(false);
+        jCheckBoxA.setEnabled(false);
+        jCheckBoxB.setEnabled(false);
+        jCheckBoxC.setEnabled(false);
+        jCheckBoxD.setEnabled(false);
+    }
+
+    public void enableAnswerControls() {
+        jRadioButtonA.setEnabled(true);
+        jRadioButtonB.setEnabled(true);
+        jRadioButtonC.setEnabled(true);
+        jRadioButtonD.setEnabled(true);
+        jCheckBoxA.setEnabled(true);
+        jCheckBoxB.setEnabled(true);
+        jCheckBoxC.setEnabled(true);
+        jCheckBoxD.setEnabled(true);
+    }
+    
+    public void clearAllSelections() {
+        buttonGroup1.clearSelection(); // clear all radio button selections
+        jCheckBoxA.setSelected(false);
+        jCheckBoxB.setSelected(false);
+        jCheckBoxC.setSelected(false);
+        jCheckBoxD.setSelected(false);
+        jLabelFeedback.setText("");
+    }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,6 +135,8 @@ public class QuizView extends javax.swing.JFrame {
         jButtonNext = new javax.swing.JButton();
         jLabelFeedback = new javax.swing.JLabel();
         jLabelStart = new javax.swing.JLabel();
+        jLabelTimer = new javax.swing.JLabel();
+        jButtonResults = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuITem = new javax.swing.JMenu();
         jMenuItemXML = new javax.swing.JMenuItem();
@@ -169,6 +207,17 @@ public class QuizView extends javax.swing.JFrame {
 
         jLabelStart.setText("Welcome to my quiz! Select XML or JSON to begin :-)");
 
+        jLabelTimer.setText("jLabel1");
+
+        jButtonResults.setBackground(new java.awt.Color(153, 255, 153));
+        jButtonResults.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonResults.setText("View Scores");
+        jButtonResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResultsActionPerformed(evt);
+            }
+        });
+
         jMenuITem.setText("File");
 
         jMenuItemXML.setText("XML");
@@ -189,7 +238,12 @@ public class QuizView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenuITem);
 
-        jMenu2.setText("Edit");
+        jMenu2.setText("Quit");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -204,7 +258,9 @@ public class QuizView extends javax.swing.JFrame {
                         .addGap(210, 210, 210)
                         .addComponent(jLabelStart, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelQuestionCount, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelQuestionCount, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelTimer)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +271,9 @@ public class QuizView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonSubmit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonNext))
+                                .addComponent(jButtonNext)
+                                .addGap(250, 250, 250)
+                                .addComponent(jButtonResults))
                             .addComponent(jLabelFeedback)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jRadioButtonB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
@@ -233,7 +291,9 @@ public class QuizView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jLabelStart)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelStart)
+                    .addComponent(jLabelTimer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelQuestionCount)
                 .addGap(18, 18, 18)
@@ -258,7 +318,8 @@ public class QuizView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPrev)
                     .addComponent(jButtonSubmit)
-                    .addComponent(jButtonNext))
+                    .addComponent(jButtonNext)
+                    .addComponent(jButtonResults))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(jLabelFeedback)
                 .addGap(28, 28, 28))
@@ -287,6 +348,14 @@ public class QuizView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemJSONActionPerformed
 
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jButtonResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResultsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonResultsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -295,6 +364,7 @@ public class QuizView extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonNext;
     private javax.swing.JButton jButtonPrev;
+    private javax.swing.JButton jButtonResults;
     private javax.swing.JButton jButtonSubmit;
     private javax.swing.JCheckBox jCheckBoxA;
     private javax.swing.JCheckBox jCheckBoxB;
@@ -304,6 +374,7 @@ public class QuizView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelQuestionCount;
     private javax.swing.JLabel jLabelQuestionText;
     private javax.swing.JLabel jLabelStart;
+    private javax.swing.JLabel jLabelTimer;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuITem;
@@ -319,6 +390,9 @@ public class QuizView extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButtonB);
         buttonGroup1.add(jRadioButtonC);
         buttonGroup1.add(jRadioButtonD);
+    }
+    void addViewScoresListener(ActionListener listenForViewScoresButton){
+        jButtonResults.addActionListener(listenForViewScoresButton);
     }
     
     void addPrevListener(ActionListener listenForPrevButton){
@@ -429,8 +503,12 @@ public class QuizView extends javax.swing.JFrame {
         buttonGroup1.clearSelection();
     }
     
-   /* public void addQuitListener(MouseListener listener) {
-        jMenuQuit.addMouseListener(listener);
-    } */
+    public void addQuitListener(MouseListener listener) {
+        jMenu2.addMouseListener(listener);
+    } 
+    
+    public void setTimerText(String text){
+        jLabelTimer.setText(text);
+    }
 
 }

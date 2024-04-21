@@ -31,8 +31,11 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="text" type="java.lang.String" value="Quit"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu2MouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>
@@ -69,7 +72,10 @@
                       <EmptySpace min="-2" pref="210" max="-2" attributes="0"/>
                       <Component id="jLabelStart" min="-2" pref="355" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelQuestionCount" min="-2" pref="415" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelQuestionCount" min="-2" pref="415" max="-2" attributes="0"/>
+                          <Component id="jLabelTimer" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -82,6 +88,8 @@
                               <Component id="jButtonSubmit" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonNext" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="250" max="-2" attributes="0"/>
+                              <Component id="jButtonResults" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabelFeedback" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -107,7 +115,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-              <Component id="jLabelStart" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelStart" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelTimer" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabelQuestionCount" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -133,6 +144,7 @@
                   <Component id="jButtonPrev" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonSubmit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonNext" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonResults" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="47" max="32767" attributes="0"/>
               <Component id="jLabelFeedback" min="-2" max="-2" attributes="0"/>
@@ -282,6 +294,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Welcome to my quiz! Select XML or JSON to begin :-)"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelTimer">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonResults">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="ff" red="99" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="View Scores"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonResultsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

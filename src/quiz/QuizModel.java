@@ -4,6 +4,7 @@
  */
 package quiz;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -35,11 +36,39 @@ import org.xml.sax.SAXException;
     }
     private SourceType currentSourceType;
     private ArrayList<Question> questions;
+    private List<Question> theResults;
     private int currentQuestionIndex;
   
     public QuizModel() throws ParserConfigurationException, SAXException {
        questions = new ArrayList<>();
        currentQuestionIndex = 0;
+       theResults = new ArrayList<>();
+       
+       try {
+            String fileName = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
+            try (FileReader fileReader = new FileReader(fileName)) {
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    String[] tokens = line.split(",", Question.NUMBER_OF_SCORES_ATTRIBUTES);
+                    
+                    String name = tokens[Question.INDEX_OF_NAME];
+                    String score = tokens[Question.INDEX_OF_SCORE];
+                    String date = tokens[Question.INDEX_OF_DATE];
+                    String timer = tokens[Question.INDEX_OF_TIMER];
+                    
+                    Question dataScores = new Question(name,
+                            score,
+                            date,
+                            timer);
+                    theResults.add(dataScores);
+                }
+            }
+ 
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+       }
     }
    
     public void loadXMLQuiz() throws ParserConfigurationException, SAXException, IOException{
@@ -179,10 +208,6 @@ import org.xml.sax.SAXException;
         return correctAnswers.containsAll(Arrays.asList(userAnswersArray)) && userAnswersArray.length == correctAnswers.size();
     }
 
-
-    public boolean isLastQuestion() {
-        return currentQuestionIndex == questions.size() - 1;
-    }
 
    
     public void clearQuestions() {

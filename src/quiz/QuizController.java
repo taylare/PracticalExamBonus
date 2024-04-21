@@ -7,12 +7,15 @@ package quiz;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.Timer;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,18 +27,52 @@ class QuizController {
     protected QuizModel theModel; //reference to data model
     private int currentQuestionNum;
     private int score;
+    private int questionsSubmitted;
+    private Timer quizTimer;
+    private long startTime;
+    private long elapsedSeconds;
     
     QuizController(QuizView theView, QuizModel theModel) {
         this.theView = theView;
         this.theModel = theModel;
         this.score = 0;
+        this.questionsSubmitted = 0;
+        
         
         this.theView.addPrevListener(new PrevButtonListener());
         this.theView.addNextListener(new NextButtonListener());
         this.theView.addXmlListener(new ViewXMLQuestionListener());
         this.theView.addSubmitListener(new SubmitButtonListener());
         this.theView.addJsonListener(new ViewJSONQuestionListener());
+        this.theView.addQuitListener(new QuitButtonListener());
         //theModel.refreshResults();
+    }
+    
+    public void startQuizTimer(){
+        startTime = System.currentTimeMillis();
+        quizTimer = new Timer (1000, (ActionEvent e) -> updateTimer()); //lambda expression used to handle actions triggered by the timer
+        quizTimer.start();
+    }
+    
+    private void updateTimer() {
+        long elapsedMillis = System.currentTimeMillis() - startTime;
+        elapsedSeconds = elapsedMillis / 1000;
+        long seconds = elapsedSeconds % 60;
+        long minutes = (elapsedSeconds / 60) % 60;
+        long hours = elapsedSeconds / 3600;
+        String timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        theView.setTimerText(timeString);
+    }
+    
+    public void stopTimer(){
+        if(quizTimer != null){
+            quizTimer.stop();
+        }
+    }
+    
+    public void resetTimer(){
+        stopTimer();
+        theView.setTimerText("00:00:00");
     }
     
     private void setUpDisplay() {
@@ -43,6 +80,11 @@ class QuizController {
             theView.resetRadioButtons(); 
             theView.setBackgroundColor(new Color(205, 180, 219));  //lavender background
             Question q = theModel.getTheQuestion(); 
+            if (q.isAnswered()){
+                theView.disableAnswerControls();
+            }else {
+                theView.enableAnswerControls();
+            }
             theView.showButtons();
             if (q != null) {
                 theView.setQuestion(q.getText());
@@ -89,7 +131,12 @@ class QuizController {
             theView.resetRadioButtons(); // Resets selections
             theView.setBackgroundColor(new Color(153, 217, 140));  
             // fetch and display the JSON question
-            Question jsonQ = theModel.getTheQuestion();  
+            Question jsonQ = theModel.getTheQuestion(); 
+            if (jsonQ.isAnswered()){
+                theView.disableAnswerControls();
+            }else {
+                theView.enableAnswerControls();
+            }
             if (jsonQ != null) {
                 theView.setQuestion(jsonQ.getText());
                 theView.setA(jsonQ.getA());
@@ -126,6 +173,13 @@ class QuizController {
         }
     }
 
+    class QuitButtonListener extends MouseAdapter {
+
+        @Override
+        public void mouseClicked (MouseEvent e) {  
+            System.exit(0);
+        }  
+    }
     
     class PrevButtonListener implements ActionListener {
         @Override
@@ -164,28 +218,41 @@ class QuizController {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
+                Question currentQuestion = theModel.getTheQuestion();
+                if(currentQuestion.isAnswered()){
+                    theView.displayErrorMessage("This question has already been answered");
+                }
+                    
                 String userAnswers = theView.getCurrentAnswer();
                 if (userAnswers.isEmpty()) {
                     theView.displayErrorMessage("Please select an answer.");
                     return;  // Exit the method if no answers are selected
                 }
-
+                questionsSubmitted++;
                 boolean isCorrect = theModel.checkAnswer(userAnswers);
                 if (isCorrect) {
                     theView.setFeedback("Correct!");
-                    score++;
+                    if(!(currentQuestion.isAnswered())){
+                      score++;
+                    }
+                    
                 } else {
                     String correctAnswers = theModel.getTheQuestion().getCorrectAnswersAsString(); 
                     theView.setFeedback("Incorrect! Correct answers: " + correctAnswers);
                 }
+                
+                currentQuestion.setAnswered(true);
+                theView.disableAnswerControls();
 
-                if (theModel.isLastQuestion()) {
+                if (questionsSubmitted == 10) {
+                    stopTimer();
                     theView.displayMessage("Finished test! You scored " + getScore() + "!");
                     String name = JOptionPane.showInputDialog(theView, "Enter your name to save the score:");
 
                     if (name != null && !name.isEmpty()) {
                         saveScore(name);
                     }
+                    resetQuiz();
                 }
             } catch (Exception ex) {
                 System.out.println(ex);
@@ -197,14 +264,23 @@ class QuizController {
     public int getScore() {
         return score;
     }
+    
+    private void resetQuiz() {
+        score = 0;
+        questionsSubmitted = 0;
+    }
 
     public void saveScore(String name) {
         String filename = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = now.format(formatter); 
+        String timerFormatted = String.format("%02d:%02d:%02d",
+                                          elapsedSeconds / 3600,
+                                          (elapsedSeconds % 3600) / 60,
+                                          elapsedSeconds % 60);
         try (PrintWriter out = new PrintWriter(new FileWriter(filename, true))) { // true to append to the file rather than overwrite
-            out.println(name + ": " + getScore() + " - completed on " + formattedDateTime);
+            out.println(name + "," + getScore() + "," + formattedDateTime + "," + timerFormatted );
         } catch (IOException ex) {
             System.err.println("Error writing to score file: " + ex.getMessage());
         }
@@ -214,9 +290,13 @@ class QuizController {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
+               resetQuiz();
                theModel.clearQuestions();
                theModel.loadXMLQuiz();
+               theView.clearAllSelections();
+               resetTimer();
                setUpDisplay();
+               startQuizTimer();
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -229,10 +309,14 @@ class QuizController {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                 theModel.clearQuestions();
+                resetQuiz();
+                theModel.clearQuestions();
                 theModel.loadJsonQuiz();
+                theView.clearAllSelections();
+                resetTimer();
                 setUpDisplayJSON();
-                theView.showButtons();     
+                startQuizTimer();
+                theView.showButtons();   
 
             } catch (Exception ex) {
                 ex.printStackTrace();
