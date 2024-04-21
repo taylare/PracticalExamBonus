@@ -4,6 +4,7 @@
  */
 package quiz;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
@@ -24,6 +25,7 @@ public class QuizView extends javax.swing.JFrame {
     public QuizView(QuizModel theModel) {
 
         initComponents();
+        customInitcomponents();
         this.theModel = theModel;
         
          hideAllOptions();
@@ -36,6 +38,7 @@ public class QuizView extends javax.swing.JFrame {
     }
     
         public void showRadioButtons() {
+        jLabelStart.setVisible(false);
         jRadioButtonA.setVisible(true);
         jRadioButtonB.setVisible(true);
         jRadioButtonC.setVisible(true);
@@ -47,6 +50,7 @@ public class QuizView extends javax.swing.JFrame {
     }
 
     public void showCheckBoxes() {
+        jLabelStart.setVisible(false);
         jRadioButtonA.setVisible(false);
         jRadioButtonB.setVisible(false);
         jRadioButtonC.setVisible(false);
@@ -66,6 +70,15 @@ public class QuizView extends javax.swing.JFrame {
         jCheckBoxB.setVisible(false);
         jCheckBoxC.setVisible(false);
         jCheckBoxD.setVisible(false);
+        jButtonNext.setVisible(false);
+        jButtonPrev.setVisible(false);
+        jButtonSubmit.setVisible(false);
+    }
+    
+    public void showButtons(){
+        jButtonNext.setVisible(true);
+        jButtonPrev.setVisible(true);
+        jButtonSubmit.setVisible(true);
     }
 
 
@@ -79,6 +92,7 @@ public class QuizView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabelQuestionText = new javax.swing.JLabel();
         jLabelQuestionCount = new javax.swing.JLabel();
         jRadioButtonA = new javax.swing.JRadioButton();
@@ -93,6 +107,7 @@ public class QuizView extends javax.swing.JFrame {
         jButtonSubmit = new javax.swing.JButton();
         jButtonNext = new javax.swing.JButton();
         jLabelFeedback = new javax.swing.JLabel();
+        jLabelStart = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuITem = new javax.swing.JMenu();
         jMenuItemXML = new javax.swing.JMenuItem();
@@ -102,48 +117,66 @@ public class QuizView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 153, 255));
 
-        jLabelQuestionText.setText("jLabel1");
-
-        jLabelQuestionCount.setText("jLabel2");
-
+        jRadioButtonA.setBackground(new java.awt.Color(204, 255, 255));
+        jRadioButtonA.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButtonA.setText("jRadioButton1");
 
+        jRadioButtonB.setBackground(new java.awt.Color(153, 255, 153));
+        jRadioButtonB.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButtonB.setText("jRadioButton2");
 
+        jRadioButtonC.setBackground(new java.awt.Color(153, 255, 204));
+        jRadioButtonC.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButtonC.setText("jRadioButton3");
 
+        jRadioButtonD.setBackground(new java.awt.Color(51, 255, 153));
+        jRadioButtonD.setForeground(new java.awt.Color(0, 0, 0));
         jRadioButtonD.setText("jRadioButton4");
 
+        jCheckBoxA.setBackground(new java.awt.Color(255, 204, 255));
+        jCheckBoxA.setForeground(new java.awt.Color(0, 0, 0));
         jCheckBoxA.setText("jCheckBox1");
 
+        jCheckBoxB.setBackground(new java.awt.Color(255, 153, 255));
+        jCheckBoxB.setForeground(new java.awt.Color(0, 0, 0));
         jCheckBoxB.setText("jCheckBox2");
 
+        jCheckBoxC.setBackground(new java.awt.Color(255, 102, 255));
+        jCheckBoxC.setForeground(new java.awt.Color(0, 0, 0));
         jCheckBoxC.setText("jCheckBox3");
 
+        jCheckBoxD.setBackground(new java.awt.Color(255, 0, 153));
+        jCheckBoxD.setForeground(new java.awt.Color(0, 0, 0));
         jCheckBoxD.setText("jCheckBox4");
 
-        jButtonPrev.setText("jButton1");
+        jButtonPrev.setBackground(new java.awt.Color(204, 255, 255));
+        jButtonPrev.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonPrev.setText("Prev");
         jButtonPrev.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPrevActionPerformed(evt);
             }
         });
 
-        jButtonSubmit.setText("jButton2");
+        jButtonSubmit.setBackground(new java.awt.Color(153, 255, 255));
+        jButtonSubmit.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonSubmit.setText("Submit");
         jButtonSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSubmitActionPerformed(evt);
             }
         });
 
-        jButtonNext.setText("jButton3");
+        jButtonNext.setBackground(new java.awt.Color(102, 255, 255));
+        jButtonNext.setForeground(new java.awt.Color(0, 0, 0));
+        jButtonNext.setText("Next");
         jButtonNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNextActionPerformed(evt);
             }
         });
 
-        jLabelFeedback.setText("jLabel1");
+        jLabelStart.setText("Welcome to my quiz! Select XML or JSON to begin :-)");
 
         jMenuITem.setText("File");
 
@@ -172,35 +205,40 @@ public class QuizView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(191, 191, 191)
+                        .addGap(210, 210, 210)
+                        .addComponent(jLabelStart, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelQuestionCount, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBoxC, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabelQuestionText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(325, 325, 325)
-                                    .addComponent(jButtonPrev)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButtonSubmit)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButtonNext))
-                                .addComponent(jLabelFeedback)
-                                .addComponent(jRadioButtonA, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jCheckBoxA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jRadioButtonB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jCheckBoxD, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jRadioButtonD, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jRadioButtonC, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBoxB, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(200, Short.MAX_VALUE))
+                            .addComponent(jLabelQuestionText, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(194, 194, 194)
+                                .addComponent(jButtonPrev)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonSubmit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonNext))
+                            .addComponent(jLabelFeedback)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jRadioButtonB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                .addComponent(jCheckBoxA, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jRadioButtonA, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jCheckBoxD, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jRadioButtonD, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                                .addComponent(jCheckBoxC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jRadioButtonC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jCheckBoxB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
+                .addComponent(jLabelStart)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelQuestionCount)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelQuestionText)
@@ -212,7 +250,7 @@ public class QuizView extends javax.swing.JFrame {
                 .addComponent(jRadioButtonB)
                 .addGap(9, 9, 9)
                 .addComponent(jCheckBoxB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(17, 17, 17)
                 .addComponent(jRadioButtonC)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBoxC)
@@ -225,7 +263,7 @@ public class QuizView extends javax.swing.JFrame {
                     .addComponent(jButtonPrev)
                     .addComponent(jButtonSubmit)
                     .addComponent(jButtonNext))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(jLabelFeedback)
                 .addGap(28, 28, 28))
         );
@@ -254,6 +292,7 @@ public class QuizView extends javax.swing.JFrame {
      */
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonNext;
     private javax.swing.JButton jButtonPrev;
     private javax.swing.JButton jButtonSubmit;
@@ -264,6 +303,7 @@ public class QuizView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFeedback;
     private javax.swing.JLabel jLabelQuestionCount;
     private javax.swing.JLabel jLabelQuestionText;
+    private javax.swing.JLabel jLabelStart;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuITem;
@@ -274,7 +314,14 @@ public class QuizView extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonC;
     private javax.swing.JRadioButton jRadioButtonD;
     // End of variables declaration//GEN-END:variables
-void addPrevListener(ActionListener listenForPrevButton){
+    private void customInitcomponents(){
+        buttonGroup1.add(jRadioButtonA);
+        buttonGroup1.add(jRadioButtonB);
+        buttonGroup1.add(jRadioButtonC);
+        buttonGroup1.add(jRadioButtonD);
+    }
+    
+    void addPrevListener(ActionListener listenForPrevButton){
         jButtonPrev.addActionListener(listenForPrevButton);
     }
     
@@ -353,16 +400,37 @@ void addPrevListener(ActionListener listenForPrevButton){
     }
     
     public void displayMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+        JOptionPane.showMessageDialog(QuizView.this, message);
     }
+
     
     public String getCurrentAnswer() {
-    if (jRadioButtonA.isSelected()) return "a";
-    if (jRadioButtonB.isSelected()) return "b";
-    if (jRadioButtonC.isSelected()) return "c";
-    if (jRadioButtonD.isSelected()) return "d";
-    return ""; 
+    StringBuilder answer = new StringBuilder();
+    if (jRadioButtonA.isVisible()) {
+        if (jRadioButtonA.isSelected()) return "a";
+        if (jRadioButtonB.isSelected()) return "b";
+        if (jRadioButtonC.isSelected()) return "c";
+        if (jRadioButtonD.isSelected()) return "d";
+    } else if (jCheckBoxA.isVisible()) {
+        if (jCheckBoxA.isSelected()) answer.append("a");
+        if (jCheckBoxB.isSelected()) answer.append("b");
+        if (jCheckBoxC.isSelected()) answer.append("c");
+        if (jCheckBoxD.isSelected()) answer.append("d");
+        return answer.toString();
+    }
+    return answer.toString(); // Returns empty string if no options are selected
 }
+    
+ 
+
+public void setBackgroundColor(Color color) {
+    getContentPane().setBackground(color);
+}
+
+public void resetRadioButtons() {
+    buttonGroup1.clearSelection();
+}
+
 
     
    /* public void addQuitListener(MouseListener listener) {

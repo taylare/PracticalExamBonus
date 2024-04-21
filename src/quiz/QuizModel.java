@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -24,13 +26,11 @@ import org.xml.sax.SAXException;
  public class QuizModel {
    private ArrayList<Question> questions;
    private int currentQuestionIndex;
-   private int score;
 
    public QuizModel() throws ParserConfigurationException, SAXException {
        questions = new ArrayList<>();
        currentQuestionIndex = 0;
-       score = 0;
-
+ 
         
         //reading data from the text file:
         try {
@@ -113,33 +113,18 @@ import org.xml.sax.SAXException;
         }
     }
     
-    public boolean checkAnswer(String userAnswer) {
-    Question currentQuestion = getTheQuestion();
-    switch (userAnswer.toLowerCase()) {
-        case "a": return currentQuestion.isACorrect();
-        case "b": return currentQuestion.isBCorrect();
-        case "c": return currentQuestion.isCCorrect();
-        case "d": return currentQuestion.isDCorrect();
-        default: return false;
+    public boolean checkAnswer(String userAnswers) {
+        Question currentQuestion = getTheQuestion();
+        List<String> correctAnswers = currentQuestion.getCorrectAnswers(); 
+        String[] userAnswersArray = userAnswers.split("");  
+        return correctAnswers.containsAll(Arrays.asList(userAnswersArray)) && userAnswersArray.length == correctAnswers.size();
     }
-}
+
 
 public boolean isLastQuestion() {
     return currentQuestionIndex == questions.size() - 1;
 }
 
-public int getScore() {
-    return score;
-}
-
-public void saveScore(String name) {
-    String filename = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
-    try (PrintWriter out = new PrintWriter(new FileWriter(filename, true))) { // true to append to the file rather than overwrite
-        out.println(name + ": " + getScore());
-    } catch (IOException ex) {
-        System.err.println("Error writing to score file: " + ex.getMessage());
-    }
-}
 
 }
    

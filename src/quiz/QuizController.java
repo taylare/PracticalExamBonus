@@ -4,8 +4,14 @@
  */
 package quiz;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -17,10 +23,12 @@ class QuizController {
     protected QuizView theView; //reference to GUI
     protected QuizModel theModel; //reference to data model
     private int currentQuestionNum;
+    private int score;
     
     QuizController(QuizView theView, QuizModel theModel) {
         this.theView = theView;
         this.theModel = theModel;
+        this.score = 0;
         
         this.theView.addPrevListener(new PrevButtonListener());
         this.theView.addNextListener(new NextButtonListener());
@@ -32,7 +40,10 @@ class QuizController {
     
     private void setUpDisplay() {
     try {
+        theView.resetRadioButtons(); 
+        theView.setBackgroundColor(new Color(205, 180, 219));  //lavender background
         Question q = theModel.getTheQuestion(); 
+        theView.showButtons();
         if (q != null) {
             theView.setQuestion(q.getText());
             theView.setA(q.getA());
@@ -86,6 +97,7 @@ class QuizController {
             if (theModel.getCurrentQuestionNum() > 0) {
                 theModel.prevQuestion();
                 setUpDisplay(); 
+                theView.setFeedback("");
             }
         }
     }
@@ -96,40 +108,39 @@ class QuizController {
             if (theModel.getCurrentQuestionNum() < theModel.getQuizCount() - 1) {
                 theModel.nextQuestion();
                 setUpDisplay(); 
+                theView.setFeedback("");
             }
         }
     }
 
-
-    
    class SubmitButtonListener implements ActionListener {
          
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                String userAnswer = theView.getCurrentAnswer();
-                if (userAnswer.isEmpty()) {
-                    theView.setFeedback("Please select an answer.");
-                    return; // stop further processing if no answer is selected
+                String userAnswers = theView.getCurrentAnswer();
+                if (userAnswers.isEmpty()) {
+                    theView.displayErrorMessage("Please select an answer.");
+                    return;  // Exit the method if no answers are selected
                 }
 
-                boolean isCorrect = theModel.checkAnswer(userAnswer);
+                boolean isCorrect = theModel.checkAnswer(userAnswers);
                 if (isCorrect) {
                     theView.setFeedback("Correct!");
+                    score++;
                 } else {
-                    String correctAnswers = theModel.getTheQuestion().getCorrectAnswersAsString();
-                    theView.setFeedback("Incorrect! Correct answer(s): " + correctAnswers);
+                    String correctAnswers = theModel.getTheQuestion().getCorrectAnswersAsString(); 
+                    theView.setFeedback("Incorrect! Correct answers: " + correctAnswers);
                 }
 
                 if (theModel.isLastQuestion()) {
-                    int totalScore = theModel.getScore();
-                    theView.displayMessage("Finished test! You scored " + totalScore + "!");
+                    theView.displayMessage("Finished test! You scored " + getScore() + "!");
                     String name = JOptionPane.showInputDialog(theView, "Enter your name to save the score:");
+
                     if (name != null && !name.isEmpty()) {
-                        theModel.saveScore(name);
+                        saveScore(name);
                     }
-                  
-                } 
+                }
             } catch (Exception ex) {
                 System.out.println(ex);
                 theView.displayErrorMessage("Error: There is a problem processing your submission.");
@@ -137,7 +148,21 @@ class QuizController {
         }
     }
 
-   
+            public int getScore() {
+             return score;
+         }
+
+        public void saveScore(String name) {
+            String filename = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = now.format(formatter); 
+            try (PrintWriter out = new PrintWriter(new FileWriter(filename, true))) { // true to append to the file rather than overwrite
+                out.println(name + ": " + getScore() + " - completed on " + formattedDateTime);
+            } catch (IOException ex) {
+                System.err.println("Error writing to score file: " + ex.getMessage());
+            }
+        }
     
     class ViewXMLQuestionListener implements ActionListener {
     @Override
