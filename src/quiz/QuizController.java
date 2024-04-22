@@ -45,7 +45,9 @@ class QuizController {
         this.theView.addSubmitListener(new SubmitButtonListener());
         this.theView.addJsonListener(new ViewJSONQuestionListener());
         this.theView.addQuitListener(new QuitButtonListener());
-        //theModel.refreshResults();
+        this.theView.addViewScoresListener(new ViewScoresButtonListener());
+
+        theModel.refreshResults();
     }
     
     public void startQuizTimer(){
@@ -172,6 +174,7 @@ class QuizController {
             theView.displayErrorMessage("Error: There was a problem setting the JSON question.");
         }
     }
+ 
 
     class QuitButtonListener extends MouseAdapter {
 
@@ -193,6 +196,21 @@ class QuizController {
                 setUpDisplayJSON();
             }
                 theView.setFeedback("");
+            }
+        }
+    }
+    
+    class ViewScoresButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try{    
+                    theModel.refreshResults();
+                    ViewScores vs = new ViewScores (theView, true, theModel);
+                    vs.setLocationRelativeTo(null);
+                    vs.setVisible(true);
+            }catch (Exception ex) {
+                    System.out.println(ex);
+                    theView.displayErrorMessage("Error, there is a problem opening view bids.");
             }
         }
     }
@@ -248,6 +266,7 @@ class QuizController {
                     stopTimer();
                     theView.displayMessage("Finished test! You scored " + getScore() + "!");
                     String name = JOptionPane.showInputDialog(theView, "Enter your name to save the score:");
+                    theModel.refreshResults();
 
                     if (name != null && !name.isEmpty()) {
                         saveScore(name);
@@ -323,6 +342,22 @@ class QuizController {
                 theView.displayErrorMessage("Error: There was an issue processing your submission.");
             }
         }
-    }            
+    } 
+  /*  
+    class PrevButtonScoresListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            theScores.previousScore();
+        }
+            
+    }
+    
+    class NextButtonScoresListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            theScores.previousScore();
+        }
+    }*/
+    
 }
   

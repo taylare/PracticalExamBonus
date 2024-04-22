@@ -67,6 +67,7 @@ public class QuizView extends javax.swing.JFrame {
         jButtonNext.setVisible(false);
         jButtonPrev.setVisible(false);
         jButtonSubmit.setVisible(false);
+        jButtonResults.setVisible(false);
         jLabelTimer.setVisible(false);
     }
     
@@ -74,6 +75,7 @@ public class QuizView extends javax.swing.JFrame {
         jButtonNext.setVisible(true);
         jButtonPrev.setVisible(true);
         jButtonSubmit.setVisible(true);
+        jButtonResults.setVisible(true);
         jLabelTimer.setVisible(true);
     }
     
@@ -272,7 +274,7 @@ public class QuizView extends javax.swing.JFrame {
                                 .addComponent(jButtonSubmit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonNext)
-                                .addGap(250, 250, 250)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonResults))
                             .addComponent(jLabelFeedback)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)

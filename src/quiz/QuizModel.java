@@ -36,7 +36,8 @@ import org.xml.sax.SAXException;
     }
     private SourceType currentSourceType;
     private ArrayList<Question> questions;
-    private List<Question> theResults;
+    private List<Scores> theResults;
+    private int currentScoreIndex = 0;
     private int currentQuestionIndex;
   
     public QuizModel() throws ParserConfigurationException, SAXException {
@@ -51,14 +52,14 @@ import org.xml.sax.SAXException;
                 
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    String[] tokens = line.split(",", Question.NUMBER_OF_SCORES_ATTRIBUTES);
+                    String[] tokens = line.split(",", Scores.NUMBER_OF_SCORES_ATTRIBUTES);
                     
-                    String name = tokens[Question.INDEX_OF_NAME];
-                    String score = tokens[Question.INDEX_OF_SCORE];
-                    String date = tokens[Question.INDEX_OF_DATE];
-                    String timer = tokens[Question.INDEX_OF_TIMER];
+                    String name = tokens[Scores.INDEX_OF_NAME];
+                    String score = tokens[Scores.INDEX_OF_SCORE];
+                    String date = tokens[Scores.INDEX_OF_DATE];
+                    String timer = tokens[Scores.INDEX_OF_TIMER];
                     
-                    Question dataScores = new Question(name,
+                    Scores dataScores = new Scores(name,
                             score,
                             date,
                             timer);
@@ -69,6 +70,35 @@ import org.xml.sax.SAXException;
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
        }
+    }
+    
+    public void refreshResults(){
+        theResults.clear();
+        try{
+            String fileName = "C:\\Users\\tayre\\Documents\\Quiz\\src\\quiz\\scores.txt";
+            try (FileReader fileReader = new FileReader(fileName)) {
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    String[] tokens = line.split(",", Scores.NUMBER_OF_SCORES_ATTRIBUTES);
+                    
+                    String name = tokens[Scores.INDEX_OF_NAME];
+                    String score = tokens[Scores.INDEX_OF_SCORE];
+                    String date = tokens[Scores.INDEX_OF_DATE];
+                    String timer = tokens[Scores.INDEX_OF_TIMER];
+                    
+                    Scores dataScores = new Scores(name,
+                            score,
+                            date,
+                            timer);
+                    theResults.add(dataScores);
+                }
+            }
+ 
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }    
     }
    
     public void loadXMLQuiz() throws ParserConfigurationException, SAXException, IOException{
@@ -199,7 +229,19 @@ import org.xml.sax.SAXException;
             currentQuestionIndex--;
         }
     }
+    
+    public void nextScore() {
+        if (currentScoreIndex < theResults.size() - 1) {
+            currentScoreIndex++;
+        }
+    }
 
+    public void previousScore() {
+        if (currentScoreIndex > 0) {
+            currentScoreIndex--;
+
+        }
+    }
     
     public boolean checkAnswer(String userAnswers) {
         Question currentQuestion = getTheQuestion();
@@ -207,12 +249,37 @@ import org.xml.sax.SAXException;
         String[] userAnswersArray = userAnswers.split("");  
         return correctAnswers.containsAll(Arrays.asList(userAnswersArray)) && userAnswersArray.length == correctAnswers.size();
     }
-
-
+    
    
     public void clearQuestions() {
         questions.clear();
         currentQuestionIndex = 0;
+    }
+    
+    
+    public List<Scores> getAllScores() {
+        return theResults;
+    }
+
+    // Add scores for testing or from file reading
+    public void addScoreRecord(Scores score) {
+        theResults.add(score);
+    }
+    
+    public boolean foundScores(){
+        return !theResults.isEmpty();
+    }
+    
+    public Scores getTheScore() {
+        return theResults.get(currentScoreIndex);
+    }
+    
+    public int getCurrentScoreNum(){
+        return currentScoreIndex;
+    }
+    
+    public int getScoreCount() {
+        return theResults.size();
     }
 
  }

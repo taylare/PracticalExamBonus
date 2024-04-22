@@ -88,7 +88,7 @@
                               <Component id="jButtonSubmit" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonNext" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="250" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jButtonResults" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabelFeedback" alignment="0" min="-2" max="-2" attributes="0"/>
