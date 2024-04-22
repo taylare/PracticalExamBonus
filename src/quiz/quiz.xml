@@ -8,53 +8,53 @@
     <d>d) None of the above</d>
   </Question>
   <Question number="2" type="radiobox">
-    <Text>Software Engineering Distinct Phases: Testing comes after Requirements Gathering</Text>
-    <a>a) True</a>
-    <b correct="true">b) False</b>
-    <c>c) blank</c>
-    <d>d) blank</d>
+    <Text>Software Engineering Distinct Phases: What phase comes after Requirements Gathering</Text>
+    <a>a) Development</a>
+    <b correct="true">b) High Level Design</b>
+    <c>c) Testing</c>
+    <d>d) Maintenance</d>
   </Question>
   <Question number="3" type="radiobox">
     <Text>What is a Critical Path?</Text>
     <a>a) Sequence of activities you can delay and still finish the project in the shortest time possible</a>
     <b correct="true">b) A sequence of activities that take the longest time to complete</b>
     <c>c) The earliest date you can start an activity</c>
-    <d>d) blank</d>
+    <d>d) dependencies</d>
   </Question>
   <Question number="4" type="radiobox">
     <Text>What does the C in the MOSCOW method stand for?</Text>
     <a>a) Cant</a>
     <b>b) Count</b>
     <c correct="true">c) Could</c>
-    <d>d) blank</d>
+    <d>d) Couldn't</d>
   </Question>
   <Question number="5" type="radiobox">
-    <Text>Usage of architecture pattern: Monolithic is best suited for very small applications where a single programmer is working on the code</Text>
-    <a correct="true">a) True</a>
-    <b>b) False</b>
-    <c>c) blank</c>
-    <d>d) blank</d>
+    <Text>Usage of architecture pattern: Which would be best for Monolithic?</Text>
+    <a correct="true">a) very small applications</a>
+    <b>b) peer-to-peer</b>
+    <c>c) large programs</c>
+    <d>d) cloud computing</d>
   </Question>
-  <Question number="6" type="radiobox">
-    <Text>Which of these is not a top level container?</Text>
-    <a>a) Jwindow</a>
-    <b correct="true">b) Jpanel</b>
-    <c>c) Jdialog</c>
-    <d>d) Jframe</d>
+  <Question number="6" type="checkbox">
+    <Text>check which containers is a top level container:</Text>
+    <a correct="true">a) Jwindow</a>
+    <b>b) Jpanel</b>
+    <c correct="true">c) Jdialog</c>
+    <d correct="true">d) Jframe</d>
   </Question>
   <Question number="7" type="radiobox">
-    <Text>Use case diagrams describe the dynamic behavior between actors of the system and objects of the system</Text>
-    <a>a) True</a>
-    <b correct="true">b) False</b>
-    <c>c) blank</c>
-    <d>d) blank</d>
-  </Question>
-  <Question number="8" type="radiobox">
     <Text>In XML, which escape character represents "&gt;"?</Text>
     <a>a) &amp;quot;</a>
     <b>b) &amp;apos;</b>
     <c>c) &amp;lt;</c>
     <d correct="true">d) &amp;gt;</d>
+  </Question>
+  <Question number="8" type="checkbox">
+    <Text>Which UML diagrams have a static structure?</Text>
+    <a correct="true">a) Class Diagran</a>
+    <b>b) Activity Diagram</b>
+    <c>c) Sequence Diagram</c>
+    <d correct="true">d) Package Diagram</d>
   </Question>
   <Question number="9" type="radiobox">
     <Text>What Software Failure Category matches this description? "A music player app crashes only when playing specific songs"</Text>

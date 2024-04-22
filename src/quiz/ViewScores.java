@@ -17,9 +17,6 @@ public class ViewScores extends javax.swing.JDialog {
     /**
      * Creates new form ViewScores
      */
-    //private List <Scores> scores;
-    //private int currentIndex = 0;
-    //private Scores currentScore;
     private QuizModel theModel;
     
     public ViewScores(java.awt.Frame parent, boolean modal, QuizModel theModel) {
@@ -153,7 +150,7 @@ public class ViewScores extends javax.swing.JDialog {
         setBackground(new java.awt.Color(255, 204, 255));
         setForeground(new java.awt.Color(255, 204, 255));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 255));
 
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("All Results!");

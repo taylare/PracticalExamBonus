@@ -131,7 +131,7 @@ class QuizController {
     private void setUpDisplayJSON() {
         try {
             theView.resetRadioButtons(); // Resets selections
-            theView.setBackgroundColor(new Color(153, 217, 140));  
+            theView.setBackgroundColor(new Color(123, 223, 242));  
             // fetch and display the JSON question
             Question jsonQ = theModel.getTheQuestion(); 
             if (jsonQ.isAnswered()){
@@ -247,6 +247,7 @@ class QuizController {
                     return;  // Exit the method if no answers are selected
                 }
                 questionsSubmitted++;
+                theView.clearAllSelections();
                 boolean isCorrect = theModel.checkAnswer(userAnswers);
                 if (isCorrect) {
                     theView.setFeedback("Correct!");
