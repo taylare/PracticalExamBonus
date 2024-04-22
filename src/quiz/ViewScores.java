@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author tayre
+ * @author Tayla Rechichi
  */
 public class ViewScores extends javax.swing.JDialog {
 
@@ -47,7 +47,7 @@ public class ViewScores extends javax.swing.JDialog {
               clearScoresDisplay();  
         }
 
-}
+    }
 
     private void updateScoresDisplay(Scores score) {
         jLabelName.setText(score.getName());
@@ -96,8 +96,6 @@ public class ViewScores extends javax.swing.JDialog {
     void disableNextButton() {
       jButtonNextScore.setEnabled(false);
     }
-    
-
     
      void addPrevScoresListener(ActionListener listenForPrevButton){
         jButtonPrevScore.addActionListener(listenForPrevButton);

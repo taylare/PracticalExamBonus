@@ -6,7 +6,7 @@ package quiz;
 
 /**
  *
- * @author tayre
+ * @author Tayla Rechichi
  */
 class Scores {
     public static final int NUMBER_OF_SCORES_ATTRIBUTES = 4;

@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author tayre
+ * @author Tayla Rechichi
  */
  public class QuizModel {
      
@@ -95,7 +95,6 @@ import org.xml.sax.SAXException;
                     theResults.add(dataScores);
                 }
             }
- 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }    

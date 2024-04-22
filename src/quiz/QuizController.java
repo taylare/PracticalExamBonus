@@ -20,12 +20,11 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author tayre
+ * @author Tayla Rechichi
  */
 class QuizController {
     protected QuizView theView; //reference to GUI
     protected QuizModel theModel; //reference to data model
-    private int currentQuestionNum;
     private int score;
     private int questionsSubmitted;
     private Timer quizTimer;
@@ -37,8 +36,7 @@ class QuizController {
         this.theModel = theModel;
         this.score = 0;
         this.questionsSubmitted = 0;
-        
-        
+           
         this.theView.addPrevListener(new PrevButtonListener());
         this.theView.addNextListener(new NextButtonListener());
         this.theView.addXmlListener(new ViewXMLQuestionListener());
@@ -46,7 +44,6 @@ class QuizController {
         this.theView.addJsonListener(new ViewJSONQuestionListener());
         this.theView.addQuitListener(new QuitButtonListener());
         this.theView.addViewScoresListener(new ViewScoresButtonListener());
-
         theModel.refreshResults();
     }
     
@@ -343,22 +340,6 @@ class QuizController {
                 theView.displayErrorMessage("Error: There was an issue processing your submission.");
             }
         }
-    } 
-  /*  
-    class PrevButtonScoresListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            theScores.previousScore();
-        }
-            
-    }
-    
-    class NextButtonScoresListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            theScores.previousScore();
-        }
-    }*/
-    
+    }    
 }
   

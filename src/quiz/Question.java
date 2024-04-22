@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author tayre
+ * @author Tayla Rechichi
  */
 class Question {
     private String text;

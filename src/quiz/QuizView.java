@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author tayre
+ * @author Tayla Rechichi
  */
 public class QuizView extends javax.swing.JFrame {
     private QuizModel theModel;

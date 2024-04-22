@@ -9,7 +9,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author tayre
+ * @author Tayla Rechichi
  */
 public class Quiz {
 
